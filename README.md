@@ -19,8 +19,8 @@ vim trust.json
     }
 aws iam create-role   --role-name SageMakerDomainExecutionRole   --assume-role-policy-document file://trust.json
 aws iam attach-role-policy   --role-name SageMakerDomainExecutionRole   --policy-arn arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
-aws sagemaker create-domain   --domain-name my-sagemaker-domain   --auth-mode IAM   --vpc-id vpc-0ab89050739097343   --subnet-ids subnet-03c8c599523144dc4        subnet-0b290d8e4fc86c743   --app-network-access-type VpcOnly   --default-user-settings "{\"ExecutionRole\": \"arn:aws:iam::461837196289:role/SageMakerDomainExecutionRole\"}"   --region ${REGION}
-aws sagemaker create-user-profile   --domain-id d-ipmtazarfgja   --user-profile-name alice-profile   --tags Key=studiouserid,Value=alice123   --region ${REGION}
+aws sagemaker create-domain   --domain-name my-sagemaker-domain   --auth-mode IAM   --vpc-id <DEFAULT_VPC_ID>   --subnet-ids <SUBNET1> <SUBNET2>   --app-network-access-type VpcOnly   --default-user-settings "{\"ExecutionRole\": \"<ROLE_ARN>\"}"   --region ${REGION}
+aws sagemaker create-user-profile   --domain-id <DOMAIN_ID>   --user-profile-name alice-profile   --tags Key=studiouserid,Value=alice123   --region ${REGION}
 aws iam create-user --user-name alice-iam-user
 aws iam tag-user   --user-name alice-iam-user   --tags Key=studiouserid,Value=alice123
 vim sagemaker-abac.json
@@ -56,6 +56,6 @@ vim sagemaker-abac.json
       ]
     }
 aws iam create-policy   --policy-name SageMaker-Studio-ABAC   --policy-document file://sagemaker-abac.json
-aws iam attach-user-policy   --user-name alice-iam-user   --policy-arn arn:aws:iam::461837196289:policy/SageMaker-Studio-ABAC
+aws iam attach-user-policy   --user-name alice-iam-user   --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/SageMaker-Studio-ABAC
 
 
